@@ -37,15 +37,78 @@ summary{cursor:pointer;padding:11px 13px;list-style:none}summary b{font-size:15p
 .sc{margin:10px 0 0;padding-top:7px;border-top:1px dashed #243566}.sc h4{margin:0 0 2px;font-size:14px;color:var(--c)}.sc h5{margin:9px 0 2px;font-size:12px;color:var(--mu);letter-spacing:.5px}
 .sc label{display:flex;gap:7px;font-size:13px;padding:1.5px 0;align-items:flex-start}
 .box{background:#0b1226cc;border:1px solid var(--bd);border-radius:14px;padding:12px;margin:14px 0}
+
+/* PDF Resource Viewer */
+#resourceModal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #050711f5;
+  padding: 16px;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#resourceModal.show {
+  display: flex;
+}
+
+.resource-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#resourceList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 130px;
+  overflow-y: auto;
+}
+
+#resourceList button.active {
+  border-color: var(--cy);
+  color: var(--cy);
+  box-shadow: 0 0 12px -2px var(--cy);
+}
+
+#pdfFrame {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  background: white;
+}
+
 </style></head><body><main>
 <header class="hero"><div class="hl"><div class="kick">// GATE CS 2027 · MISSION CONTROL</div><h1><span class="g">GATE REVISION PLANNER</span></h1><div class="mu">Topic tests → subject tests → 30 mocks · connected topics · 8–12 h/day</div>
-<div class="row" style="margin:12px 0 6px"><label class="mu">START <input type="date" id="sd"></label><button id="core">Core only (8 h)</button><button id="ex">Expand all</button><button id="rs">Reset</button></div><div id="bh" class="mu"></div></div><div id="ring"></div></header>
+<div class="row" style="margin:12px 0 6px"><label class="mu">START <input type="date" id="sd"></label><button id="core">Core only (8 h)</button><button id="ex">Expand all</button><button id="rs">Reset</button><button id="workbooks">Workbooks</button>
+<button id="pyqbook">PYQ Book</button></div><div id="bh" class="mu"></div></div><div id="ring"></div></header>
 <div hidden><i id="pb"></i><div id="st"></div><div id="blk"></div><div id="bh2"></div></div>
 <div id="tiles"></div><h3>SUBJECT MASTERY</h3><div id="subj"></div>
 <details class="mkbox" id="mk"><summary>📈 MOCK SCORE TRACKER</summary><div id="mkb"></div></details>
 <div class="row" id="tabs"></div><div id="days"></div>
 <div class="box"><b>Reserve tests (use on spill / weak-subject days)</b><div id="res" class="mu" style="margin-top:6px"></div>
 <div class="mu" style="margin-top:8px"><b>Rules:</b> (1) Score ≥80% on a topic’s first test → skip its remaining PYQ extras. (2) Every wrong answer is tagged concept / silly / time in the error log. (3) Behind by 1+ day → switch on Core only; ⭐ items drop out. (4) If GO mocks 18–25 aren’t live yet, swap in official GATE papers.</div></div>
+<div id="resourceModal">
+  <div class="resource-head">
+    <b id="resourceTitle">Study Resources</b>
+    <button id="closeResources">✕ Close</button>
+  </div>
+
+  <div id="resourceList"></div>
+
+  <iframe
+    id="pdfFrame"
+    title="Study Resource PDF Viewer">
+  </iframe>
+</div>
+
 </main><script>
 const G=id=>"https://gateoverflow.in/exam/"+id,K="g55v1";
 const P1=[
@@ -142,5 +205,87 @@ d.sub.map((_,a)=>one(d,a,0)).join("")+`</div></details>`}).join("");
 $("res").innerHTML=RES;dash(td,fi,fn,dh,all)}
 function tg(k,v){if(v)S.c[k]=1;else delete S.c[k];save();const o=[...document.querySelectorAll("details")].map(e=>e.open);render();document.querySelectorAll("details").forEach((e,i)=>e.open=o[i])}
 $("sd").onchange=e=>{S.sd=e.target.value;save();render()};$("ex").onclick=()=>{const ds=[...document.querySelectorAll("details")],o=ds.some(e=>!e.open);ds.forEach(e=>e.open=o)};$("core").onclick=()=>{S.core=S.core?0:1;save();render()};$("rs").onclick=()=>{if(confirm("Clear all progress?")){S.c={};save();render()}};
+
+// ===============================
+// STUDY RESOURCE PDF MANAGEMENT
+// ===============================
+
+const resourceFiles = {
+  "Workbooks": [
+    ["Algorithms", "Algorithms_Workbook.pdf"],
+    ["Computer Networks", "CN-WorkBook-GFG-2026.pdf"],
+    ["COA", "COA-WorkBook-GFG-2026.pdf"],
+    ["C Programming", "CProgramming_Workbook.pdf"],
+    ["Compiler Design", "CompilerDesign_Workbook.pdf"],
+    ["DBMS", "DBMS-WorkBook-GFG-2026.pdf"],
+    ["Discrete Mathematics", "DM_WorkBook_2026_GFG.pdf"],
+    ["Data Structures", "DataStructures_Workbook.pdf"],
+    ["Engineering Mathematics", "EM_WorkBook_2026_GFG.pdf"],
+    ["Operating Systems", "OperatingSystems_Workbook.pdf"],
+    ["TOC", "TOC_WorkBook_2026_GFG.pdf"]
+  ],
+
+  "PYQ Book": [
+    ["GfG PYQ Book", "GfG PYQ Book.pdf"]
+  ]
+};
+
+const resourceModal = $("resourceModal");
+const resourceList = $("resourceList");
+const pdfFrame = $("pdfFrame");
+
+function openResources(type) {
+  $("resourceTitle").textContent = type;
+  resourceList.innerHTML = "";
+  resourceModal.classList.add("show");
+
+  resourceFiles[type].forEach(([name, filename], index) => {
+    const btn = document.createElement("button");
+
+    btn.textContent = name;
+
+    btn.onclick = () => {
+      resourceList.querySelectorAll("button").forEach(b => {
+        b.classList.remove("active");
+      });
+
+      btn.classList.add("active");
+
+      const folder = type === "Workbooks"
+        ? "workbooks"
+        : "pyq";
+
+      pdfFrame.src =
+        "resources/" + folder + "/" +
+        encodeURIComponent(filename);
+    };
+
+    resourceList.appendChild(btn);
+
+    // Automatically open the first PDF
+    if (index === 0) {
+      btn.click();
+    }
+  });
+}
+
+// Header buttons
+$("workbooks").onclick = () => openResources("Workbooks");
+$("pyqbook").onclick = () => openResources("PYQ Book");
+
+// Close viewer
+$("closeResources").onclick = () => {
+  resourceModal.classList.remove("show");
+  pdfFrame.src = "about:blank";
+};
+
+// Close using Escape key
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    resourceModal.classList.remove("show");
+    pdfFrame.src = "about:blank";
+  }
+});
+
 render();
 </script></body></html>
