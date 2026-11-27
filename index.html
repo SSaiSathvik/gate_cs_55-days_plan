@@ -1,29 +1,48 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>GATE CS 2027 · 55-Day Planner</title>
 <style>
-:root{--bg:#fafaf7;--card:#fff;--tx:#1d2420;--mu:#6b746e;--bd:#e1e5df;--ac:#0b7a4b;--p1:#0b7a4b;--p2:#b25e09;--p3:#7a2cc4;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a17;--card:#1d2521;--tx:#e8eee9;--mu:#98a39b;--bd:#2d3832;--ac:#3fcf8e;--p1:#3fcf8e;--p2:#f0a34a;--p3:#c79bff;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#141a17;--card:#1d2521;--tx:#e8eee9;--mu:#98a39b;--bd:#2d3832;--ac:#3fcf8e;--p1:#3fcf8e;--p2:#f0a34a;--p3:#c79bff;color-scheme:dark}
+:root{--bg:#060914;--card:#0c1224;--tx:#e8f0ff;--mu:#8190b3;--bd:#1b2748;--cy:#00e5ff;--mg:#ff3df0;--lm:#b6ff3b;--am:#ffb020;--vi:#9b6bff;--ac:var(--cy);--p1:var(--lm);--p2:var(--am);--p3:var(--mg);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:860px;margin:0 auto;padding:16px 14px 60px}
-h1{font-size:22px;margin:4px 0}.mu{color:var(--mu);font-size:13px}
-.bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac);width:0}
-.box{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:10px 0}
+body{margin:0;color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(900px 520px at 90% -8%,#34115a99,transparent 62%),radial-gradient(760px 520px at -5% 35%,#00395577,transparent 60%),#050711;background-attachment:fixed}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(#ffffff07 1px,transparent 1px),linear-gradient(90deg,#ffffff07 1px,transparent 1px);background-size:36px 36px}
+main{position:relative;max-width:900px;margin:0 auto;padding:18px 14px 70px}
+.mono,button,.tag,.kick,.tile b,.sj span,.mu{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.mu{color:var(--mu);font-size:12.5px}
+.hero{display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:20px;border:1px solid #243566;border-radius:20px;background:linear-gradient(135deg,#0d1632cc,#140a2ecc);box-shadow:0 0 40px -12px var(--cy),inset 0 0 40px -30px var(--mg)}
+.hl{flex:1;min-width:250px}.kick{color:var(--cy);font-size:12px;letter-spacing:2px;text-shadow:0 0 8px var(--cy)}
+h1{font:800 clamp(28px,6.5vw,44px)/1.08 system-ui,sans-serif;margin:8px 0;letter-spacing:-1px}
+h1 .g{background:linear-gradient(90deg,var(--cy),var(--mg));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px #00e5ff55)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-button,input{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px}
-button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
-details{background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--c);border-radius:10px;margin:8px 0}
-summary{cursor:pointer;padding:10px 12px;list-style:none}summary b{font-size:15px}
-.today{box-shadow:0 0 0 2px var(--ac)}.done{opacity:.6}
-.in{padding:0 12px 12px}.it{display:flex;gap:8px;padding:4px 0;align-items:flex-start}
-.it a{color:var(--ac)}.opt{color:var(--mu)}.sub{font-size:13px;margin:6px 0 0 4px;columns:2;column-gap:14px}.sub label{display:flex;gap:6px;break-inside:avoid;padding:1px 0}
-.tag{font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid var(--c);color:var(--c);margin-left:6px;white-space:nowrap}
-@media(max-width:560px){.sub{columns:1}}
-.sc{margin:10px 0 0;padding-top:6px;border-top:1px dashed var(--bd)}.sc h4{margin:0 0 2px;font-size:14px}.sc h5{margin:8px 0 2px;font-size:13px;color:var(--mu)}.sc label{display:flex;gap:6px;font-size:13px;padding:1px 0;align-items:flex-start}</style></head><body><main>
-<h1>GATE CS 2027 · 55-day planner</h1>
-<div class="mu">Phase 1 (D1–18) connected cross-subject topic days · Phase 2 (D19–28) connected subject + mixed tests · Phase 3 (D29–53) 30 mocks · D54–55 final revision. ~10 h/day (8 h floor, 12 h on double-mock days).</div>
-<div class="box"><div class="row"><label>Start date <input type="date" id="sd"></label><button id="core">Core only (8 h mode)</button><button id="ex">Expand / collapse all</button><button id="rs">Reset</button></div>
-<div id="st" style="margin:10px 0 6px"></div><div class="bar"><i id="pb"></i></div><div id="bh" class="mu" style="margin-top:6px"></div></div>
+button,input{font:inherit;color:var(--tx);background:#0a1020;border:1px solid #28386d;border-radius:10px;padding:6px 11px}
+button{cursor:pointer;font-size:13px}button:hover{border-color:var(--cy);box-shadow:0 0 12px -2px var(--cy)}
+button.on{background:linear-gradient(90deg,var(--cy),#6bf0ff);color:#021018;border-color:var(--cy);font-weight:700;box-shadow:0 0 16px -2px var(--cy)}
+input[type=date]{color-scheme:dark}input[type=checkbox]{accent-color:var(--cy)}
+#tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.tile{padding:12px;border-radius:14px;background:#0b1226cc;border:1px solid var(--bd);border-top:2px solid var(--c);box-shadow:0 -8px 24px -18px var(--c)}
+.tile span{font-size:11px;letter-spacing:1.5px;color:var(--mu)}.tile b{display:block;font-size:21px;color:var(--c);text-shadow:0 0 12px var(--c)}
+h3{margin:22px 2px 8px;font-size:13px;letter-spacing:2px;color:var(--mu);font-family:ui-monospace,Menlo,monospace}
+#subj{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}
+.sj{padding:10px;border-radius:12px;background:#0b1226cc;border:1px solid var(--bd)}.sj b{font-size:13px;color:var(--c)}
+.sb{height:6px;border-radius:6px;background:#1a2447;margin:7px 0 4px;overflow:hidden}.sb i{display:block;height:100%;background:var(--c);box-shadow:0 0 10px var(--c);border-radius:6px}.sj span{font-size:11px;color:var(--mu)}
+.mkbox{border:1px solid #3a2262;border-radius:14px;background:#0c0a1fcc;margin:14px 0}.mkbox>summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--mg);list-style:none}.mkbox>div{padding:0 14px 14px}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px;margin-top:8px;font:11px ui-monospace,monospace;color:var(--mu)}.mg input{width:100%;box-sizing:border-box;margin-top:2px;padding:4px 6px}
+#tabs{margin:18px 0 6px}#tabs button{border-radius:20px}
+#days{margin-left:12px;padding-left:24px;border-left:2px solid #1d2b52}
+#days details{position:relative;margin:12px 0;border:1px solid var(--bd);border-left:3px solid var(--c);border-radius:14px;background:#0b1226cc;backdrop-filter:blur(6px)}
+#days details[data-d]:before{content:attr(data-d);position:absolute;left:-40px;top:11px;width:26px;height:26px;border-radius:50%;background:#050711;border:2px solid var(--c);color:var(--c);display:grid;place-items:center;font:700 11px ui-monospace,monospace;box-shadow:0 0 12px var(--c)}
+#days details[open]{box-shadow:0 0 22px -10px var(--c)}
+summary{cursor:pointer;padding:11px 13px;list-style:none}summary b{font-size:15px}
+.today{box-shadow:0 0 0 1px var(--c),0 0 28px -6px var(--c)!important}.done{opacity:.55}
+.in{padding:0 13px 13px}.it{display:flex;gap:8px;padding:4px 0;align-items:flex-start}.it a{color:var(--cy);text-decoration:none;border-bottom:1px dotted var(--cy)}.opt{color:var(--mu)}
+.tag{font-size:11px;padding:1px 8px;border-radius:9px;border:1px solid var(--c);color:var(--c);margin-left:8px;white-space:nowrap;box-shadow:0 0 8px -3px var(--c)}
+.sc{margin:10px 0 0;padding-top:7px;border-top:1px dashed #243566}.sc h4{margin:0 0 2px;font-size:14px;color:var(--c)}.sc h5{margin:9px 0 2px;font-size:12px;color:var(--mu);letter-spacing:.5px}
+.sc label{display:flex;gap:7px;font-size:13px;padding:1.5px 0;align-items:flex-start}
+.box{background:#0b1226cc;border:1px solid var(--bd);border-radius:14px;padding:12px;margin:14px 0}
+</style></head><body><main>
+<header class="hero"><div class="hl"><div class="kick">// GATE CS 2027 · MISSION CONTROL</div><h1><span class="g">GATE REVISION PLANNER</span></h1><div class="mu">Topic tests → subject tests → 30 mocks · connected topics · 8–12 h/day</div>
+<div class="row" style="margin:12px 0 6px"><label class="mu">START <input type="date" id="sd"></label><button id="core">Core only (8 h)</button><button id="ex">Expand all</button><button id="rs">Reset</button></div><div id="bh" class="mu"></div></div><div id="ring"></div></header>
+<div hidden><i id="pb"></i><div id="st"></div><div id="blk"></div><div id="bh2"></div></div>
+<div id="tiles"></div><h3>SUBJECT MASTERY</h3><div id="subj"></div>
+<details class="mkbox" id="mk"><summary>📈 MOCK SCORE TRACKER</summary><div id="mkb"></div></details>
 <div class="row" id="tabs"></div><div id="days"></div>
 <div class="box"><b>Reserve tests (use on spill / weak-subject days)</b><div id="res" class="mu" style="margin-top:6px"></div>
 <div class="mu" style="margin-top:8px"><b>Rules:</b> (1) Score ≥80% on a topic’s first test → skip its remaining PYQ extras. (2) Every wrong answer is tagged concept / silly / time in the error log. (3) Behind by 1+ day → switch on Core only; ⭐ items drop out. (4) If GO mocks 18–25 aren’t live yet, swap in official GATE papers.</div></div>
@@ -99,18 +118,28 @@ function bySubj(){const g={};D.forEach(d=>d.sub.forEach((s,a)=>{if(d.ph==1||s[0]
 const ord=["C Programming","Data Structures","Algorithms","TOC","Compiler Design","Digital Logic","COA","Operating Systems","Computer Networks","DBMS","Discrete Maths","Eng Maths","Aptitude"];
 return ord.filter(k=>g[k]).map(k=>{let t=0,n=0;g[k].forEach(([d,a])=>d.sub[a][2].forEach((x,b)=>x[1].forEach((_,c)=>{t++;if(S.c[kk(d,a,b,c)])n++})));
 return `<details style="--c:var(--ac)"><summary><b>${k}</b><div class="mu">${n}/${t} subtopics · ${g[k].length} day(s)</div></summary><div class="in">`+g[k].map(([d,a])=>one(d,a,1)).join("")+`</div></details>`}).join("")}
+const SC={"C Programming":"#00e5ff","Data Structures":"#b6ff3b","Algorithms":"#ffb020","TOC":"#ff3df0","Compiler Design":"#9b6bff","Digital Logic":"#ff6b6b","COA":"#36f1b0","Operating Systems":"#4da3ff","Computer Networks":"#ffd34d","DBMS":"#ff8ad8","Discrete Maths":"#7dffb3","Eng Maths":"#c2a6ff"};
+const sm=(k,v)=>{S.m=S.m||{};if(v==="")delete S.m[k];else S.m[k]=+v;save();render()},st2=v=>{S.tg=+v;save();render()};
+function dash(td,fi,fn,dh,all){const pct=all?dh/all:0,C=2*Math.PI*60;
+$("ring").innerHTML=`<svg viewBox="0 0 150 150" width="150" height="150"><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00e5ff"/><stop offset="1" stop-color="#ff3df0"/></linearGradient></defs><circle cx="75" cy="75" r="60" fill="none" stroke="#1b2748" stroke-width="12"/><circle cx="75" cy="75" r="60" fill="none" stroke="url(#gr)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C*pct} ${C}" transform="rotate(-90 75 75)" style="filter:drop-shadow(0 0 6px #00e5ff)"/><text x="75" y="76" text-anchor="middle" fill="#e8f0ff" font-size="28" font-weight="800" font-family="ui-monospace,monospace">${Math.round(pct*100)}%</text><text x="75" y="95" text-anchor="middle" fill="#8190b3" font-size="11" font-family="ui-monospace,monospace">COMPLETE</text></svg>`;
+let tt=0,tn=0,mt=0,mn=0;D.forEach(d=>d.i.forEach((x,j)=>{const ck=S.c[d.n+"."+j];if(d.ph==3&&/Mock|Official GATE/.test(x.t)){mt++;if(ck)mn++}else if(x.l&&/test/i.test(x.t)){tt++;if(ck)tn++}}));
+$("tiles").innerHTML=[["DAYS",D.filter(dn).length+"/55","--lm"],["HOURS",Math.round(dh)+"/"+Math.round(all),"--cy"],["TESTS",tn+"/"+tt,"--am"],["MOCKS",mn+"/"+mt,"--mg"],["NEXT",fi?"Day "+fn:"Done","--vi"]].map(t=>`<div class="tile" style="--c:var(${t[2]})"><span>${t[0]}</span><b>${t[1]}</b></div>`).join("");
+const g={};D.filter(d=>d.ph==1).forEach(d=>d.sub.forEach((s,a)=>{const o=g[s[0]]=g[s[0]]||[0,0];s[2].forEach((x,b)=>x[1].forEach((_,c)=>{o[1]++;if(S.c[kk(d,a,b,c)])o[0]++}))}));
+$("subj").innerHTML=Object.keys(SC).filter(k=>g[k]).map(k=>{const n=g[k][0],t=g[k][1],p=t?n/t*100:0;return `<div class="sj" style="--c:${SC[k]}"><b>${k}</b><div class="sb"><i style="width:${p}%"></i></div><span>${n}/${t} · ${Math.round(p)}%</span></div>`}).join("");
+const m=S.m||{},tg=S.tg||65,ks=Object.keys(m).map(Number).sort((a,b)=>a-b),pts=ks.map(k=>[(k-1)/29*300+10,90-Math.min(100,m[k])*.8]);
+$("mkb").innerHTML=`<div class="row">Target <input type="number" style="width:70px" value="${tg}" onchange="st2(this.value)"> / 100 <span class="mu">avg ${ks.length?(ks.reduce((a,k)=>a+m[k],0)/ks.length).toFixed(1):"–"} · best ${ks.length?Math.max(...ks.map(k=>m[k])):"–"} · logged ${ks.length}/30</span></div><svg viewBox="0 0 320 100" width="100%" height="110"><line x1="10" x2="310" y1="${90-tg*.8}" y2="${90-tg*.8}" stroke="#b6ff3b" stroke-dasharray="4 4"/><polyline fill="none" stroke="#ff3df0" stroke-width="2.5" points="${pts.map(p=>p.join(",")).join(" ")}" style="filter:drop-shadow(0 0 4px #ff3df0)"/>${pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="#00e5ff"/>`).join("")}</svg><div class="mg">`+Array.from({length:30},(_,i)=>`<label>M${i+1}<input type="number" min="0" max="100" value="${m[i+1]??""}" onchange="sm(${i+1},this.value)"></label>`).join("")+`</div>`}
 function render(){const td=Math.floor((new Date(new Date().toDateString())-new Date(S.sd+"T00:00:00"))/864e5)+1;
 $("sd").value=S.sd;$("core").className=S.core?"on":"";
 let tot=0,dh=0,all=0;D.forEach(d=>{vis(d).forEach(x=>{all+=x.h;if(S.c[d.n+"."+d.i.indexOf(x)])dh+=x.h})});
 const fi=D.find(d=>!dn(d)),fn=fi?fi.n:56,beh=td>0?Math.max(0,Math.min(td,56)-fn):0;
-$("pb").style.width=(all?dh/all*100:0)+"%";$("st").innerHTML="<b>"+Math.round(dh)+"</b> / "+Math.round(all)+" h done · "+(fi?"next: Day "+fn:"all done 🎉");
+$("pb").style.width=(all?dh/all*100:0)+"%";{const n=Math.round(20*(all?dh/all:0));$("blk").innerHTML=Array.from({length:20},(_,i)=>`<i class="${i<n?"f":""}"></i>`).join("")}$("bh2").textContent="\u2713 "+(D.filter(dn).length)+" / 55 days complete";$("st").innerHTML="<span class=\"d\">"+Math.round(dh)+" / "+Math.round(all)+" h done · "+(fi?"next: Day "+fn:"all done")+"</span>";
 $("bh").textContent=td<1?"Plan starts "+dt(1):td>55?"Plan window over":"Today = Day "+td+(beh>0?" · you’re "+beh+" day(s) behind → turn on Core only, push spill to D54":" · on track");
 $("tabs").innerHTML=["All","Phase 1","Phase 2","Phase 3","Subtopics by subject"].map((x,i)=>`<button class="${tab==i?"on":""}" onclick="tab=${i};render()">${x}</button>`).join("");
 $("days").innerHTML=tab==4?bySubj():D.filter(d=>!tab||d.ph==tab).map(d=>{const v=vis(d),ids=v.map(x=>d.i.indexOf(x)),k=ids.filter(j=>S.c[d.n+"."+j]).length,ks=keysOf(d),sk=ks.filter(x=>S.c[x]).length;
-return `<details class="${d.n==td?"today ":""}${k==v.length?"done":""}" style="--c:${col[d.ph]}" ${d.n==td?"open":""}><summary><b>Day ${d.n} · ${d.t}</b><span class="tag">${nm[d.ph]}</span><div class="mu">${dt(d.n)} · ${hrs(d).toFixed(1)} h · ${k}/${v.length} tasks · ${sk}/${ks.length} subtopics</div></summary><div class="in">${d.cn?"<div class='mu' style='margin:0 0 6px'>🔗 "+d.cn+"</div>":""}`+
+return `<details data-d="${d.n}" class="${d.n==td?"today ":""}${k==v.length?"done":""}" style="--c:${col[d.ph]}" ${d.n==td?"open":""}><summary><b>Day ${d.n} · ${d.t}</b><span class="tag">${nm[d.ph]}</span><div class="mu">${dt(d.n)} · ${hrs(d).toFixed(1)} h · ${k}/${v.length} tasks · ${sk}/${ks.length} subtopics</div></summary><div class="in">${d.cn?"<div class='mu' style='margin:0 0 6px'>🔗 "+d.cn+"</div>":""}`+
 v.map((x,j)=>`<label class="it ${x.o?"opt":""}"><input type="checkbox" ${S.c[d.n+"."+ids[j]]?"checked":""} onchange="tg('${d.n}.${ids[j]}',this.checked)"><span>${x.o?"⭐ ":""}${x.l?`<a href="${x.l}" target="_blank" rel="noopener">${x.t}</a>`:x.t} <span class="mu">${x.h?x.h+" h":""}</span></span></label>`).join("")+
 d.sub.map((_,a)=>one(d,a,0)).join("")+`</div></details>`}).join("");
-$("res").innerHTML=RES}
+$("res").innerHTML=RES;dash(td,fi,fn,dh,all)}
 function tg(k,v){if(v)S.c[k]=1;else delete S.c[k];save();const o=[...document.querySelectorAll("details")].map(e=>e.open);render();document.querySelectorAll("details").forEach((e,i)=>e.open=o[i])}
 $("sd").onchange=e=>{S.sd=e.target.value;save();render()};$("ex").onclick=()=>{const ds=[...document.querySelectorAll("details")],o=ds.some(e=>!e.open);ds.forEach(e=>e.open=o)};$("core").onclick=()=>{S.core=S.core?0:1;save();render()};$("rs").onclick=()=>{if(confirm("Clear all progress?")){S.c={};save();render()}};
 render();
