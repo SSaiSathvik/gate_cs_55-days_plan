@@ -338,4 +338,20 @@ q("sy-p").onclick=push;q("sy-g").onclick=()=>pull(false);
 q("sy-o").onclick=()=>{localStorage.removeItem(T);localStorage.removeItem(I);msg("disconnected")};
 if(localStorage.getItem(T))setTimeout(()=>pull(true),800);
 })();
+  /* GATE countdown button. Paste inside your existing script block, AFTER the sync patch. */
+(function(){
+const TARGET=new Date(2027,1,6,0,1,0); /* Feb 6, 2027, 12:01 AM (your local time). Change here if the date changes. */
+const rs=document.getElementById("rs");
+const b=document.createElement("button");b.id="cd";b.title="Time left until Feb 6, 12:01 AM";
+b.style.cssText="cursor:default;color:#ff3df0;border-color:#ff3df0;font-weight:700;box-shadow:0 0 14px -3px #ff3df0;letter-spacing:.3px";
+if(rs)rs.parentNode.appendChild(b);else document.body.prepend(b);
+const p=n=>String(n).padStart(2,"0");
+function tick(){
+ let ms=TARGET-new Date();
+ if(ms<=0){b.textContent="🎯 GATE time!";return}
+ const m=Math.floor(ms/60000),d=Math.floor(m/1440),h=Math.floor(m%1440/60),mi=m%60;
+ b.textContent="⏳ "+d+"d : "+p(h)+"h : "+p(mi)+"m";
+}
+tick();setInterval(tick,15000);
+})();
 </script></body></html>
