@@ -288,4 +288,56 @@ document.addEventListener("keydown", e => {
 });
 
 render();
+/* ===== Cross-device sync patch =====
+   Paste this just before the LAST </script> in your index.html.
+   Needs: your progress key in localStorage = "g55v1" (change K below if you renamed it). */
+(function(){
+const K="g55v1",T="g55tok",I="g55gid",TS="g55ts",F="gate55.json";
+const _si=Storage.prototype.setItem;let timer;
+const H=()=>({Authorization:"Bearer "+localStorage.getItem(T),Accept:"application/vnd.github+json"});
+/* stamp every progress save; auto-push to the cloud if a token is set */
+Storage.prototype.setItem=function(k,v){_si.call(this,k,v);if(k===K){_si.call(this,TS,String(Date.now()));if(localStorage.getItem(T)){clearTimeout(timer);timer=setTimeout(push,2500)}}};
+const msg=t=>{const e=document.getElementById("sy-m");if(e)e.textContent=t};
+async function findId(){let id=localStorage.getItem(I);if(id)return id;
+ const r=await fetch("https://api.github.com/gists?per_page=100",{headers:H()});if(!r.ok)throw Error("token/list "+r.status);
+ const g=(await r.json()).find(x=>x.files&&x.files[F]);if(g){_si.call(localStorage,I,g.id);return g.id}return null}
+async function push(){try{
+ const content=JSON.stringify({ts:+localStorage.getItem(TS)||Date.now(),data:localStorage.getItem(K)||"{}"});
+ const id=await findId();
+ const r=await fetch(id?"https://api.github.com/gists/"+id:"https://api.github.com/gists",{method:id?"PATCH":"POST",headers:{...H(),"Content-Type":"application/json"},body:JSON.stringify({description:"GATE55 progress",public:false,files:{[F]:{content}}})});
+ if(!r.ok)throw Error(r.status);const j=await r.json();_si.call(localStorage,I,j.id);msg("☁ pushed "+new Date().toLocaleTimeString())}catch(e){msg("push failed: "+e.message)}}
+async function pull(auto){try{
+ const id=await findId();if(!id){msg("no cloud copy yet - press Push first");return}
+ const r=await fetch("https://api.github.com/gists/"+id,{headers:H()});if(!r.ok)throw Error(r.status);
+ const f=(await r.json()).files[F],c=f.truncated?await(await fetch(f.raw_url)).text():f.content,o=JSON.parse(c),lt=+localStorage.getItem(TS)||0;
+ if(!auto||o.ts>lt){_si.call(localStorage,K,o.data);_si.call(localStorage,TS,String(o.ts));location.reload()}else msg("already up to date")}catch(e){msg("pull failed: "+e.message)}}
+/* copy / paste code (no setup needed) */
+const enc=()=>btoa(unescape(encodeURIComponent(localStorage.getItem(K)||"{}")));
+const dec=s=>decodeURIComponent(escape(atob(s.trim())));
+/* UI */
+const b=document.createElement("button");b.textContent="☁ Sync";
+b.style.cssText="position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:50;background:#00e5ff;color:#021018;border:0;border-radius:24px;padding:10px 16px;font-weight:700;box-shadow:0 0 18px #00e5ffaa;cursor:pointer";
+const m=document.createElement("div");m.style.cssText="display:none;position:fixed;inset:0;z-index:60;background:#000b;align-items:center;justify-content:center;padding:14px";
+const bs="background:#0a1020;color:#e8f0ff;border:1px solid #28386d;border-radius:10px;padding:7px 12px;cursor:pointer;margin:3px 3px 3px 0";
+m.innerHTML=`<div style="background:#0c1224;border:1px solid #28386d;border-radius:16px;max-width:520px;width:100%;max-height:90vh;overflow:auto;padding:16px;color:#e8f0ff;font:14px/1.5 system-ui">
+<b style="font-size:16px">☁ Sync progress between devices</b>
+<p style="color:#8190b3;margin:10px 0 4px"><b style="color:#b6ff3b">Option 1 · No setup.</b> Copy the code on one device, paste it on the other.</p>
+<button id="sy-c" style="${bs}">Copy my code</button><button id="sy-l" style="${bs}">Load pasted code</button>
+<textarea id="sy-t" rows="3" placeholder="paste code here" style="width:100%;box-sizing:border-box;margin-top:6px;background:#0a1020;color:#e8f0ff;border:1px solid #28386d;border-radius:10px;padding:8px"></textarea>
+<p style="color:#8190b3;margin:14px 0 4px"><b style="color:#ff3df0">Option 2 · Automatic.</b> GitHub token (classic, only the <code>gist</code> scope). Do this once on each device.</p>
+<input id="sy-k" type="password" placeholder="ghp_..." style="width:100%;box-sizing:border-box;background:#0a1020;color:#e8f0ff;border:1px solid #28386d;border-radius:10px;padding:8px">
+<button id="sy-s" style="${bs}">Save token &amp; connect</button><button id="sy-p" style="${bs}">Push now</button><button id="sy-g" style="${bs}">Pull now</button><button id="sy-o" style="${bs}">Disconnect</button>
+<div id="sy-m" style="color:#00e5ff;margin-top:8px;min-height:20px"></div><button id="sy-x" style="${bs}">Close</button></div>`;
+document.body.append(b,m);
+const q=id=>document.getElementById(id);
+b.onclick=()=>{m.style.display="flex";q("sy-k").value=localStorage.getItem(T)||"";msg(localStorage.getItem(T)?"cloud sync is ON":"cloud sync is OFF")};
+q("sy-x").onclick=()=>m.style.display="none";
+q("sy-c").onclick=async()=>{const c=enc();try{await navigator.clipboard.writeText(c);msg("code copied")}catch(e){q("sy-t").value=c;q("sy-t").select();msg("copy it from the box")}};
+q("sy-l").onclick=()=>{try{const t=dec(q("sy-t").value);JSON.parse(t);_si.call(localStorage,K,t);_si.call(localStorage,TS,String(Date.now()));location.reload()}catch(e){msg("invalid code")}};
+q("sy-s").onclick=async()=>{const v=q("sy-k").value.trim();if(!v)return;_si.call(localStorage,T,v);localStorage.removeItem(I);msg("connecting...");
+ try{const id=await findId();if(id)pull(false);else push()}catch(e){msg("connect failed: "+e.message)}};
+q("sy-p").onclick=push;q("sy-g").onclick=()=>pull(false);
+q("sy-o").onclick=()=>{localStorage.removeItem(T);localStorage.removeItem(I);msg("disconnected")};
+if(localStorage.getItem(T))setTimeout(()=>pull(true),800);
+})();
 </script></body></html>
