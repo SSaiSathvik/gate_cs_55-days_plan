@@ -314,7 +314,7 @@ const enc=()=>btoa(unescape(encodeURIComponent(localStorage.getItem(K)||"{}")));
 const dec=s=>decodeURIComponent(escape(atob(s.trim())));
 /* UI */
 const b=document.createElement("button");b.textContent="☁ Sync";
-b.style.cssText="position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:50;background:#00e5ff;color:#021018;border:0;border-radius:24px;padding:10px 16px;font-weight:700;box-shadow:0 0 18px #00e5ffaa;cursor:pointer";
+const rs=document.getElementById("rs");if(!rs)b.style.cssText="margin:10px;padding:8px 14px;border-radius:10px;background:#00e5ff;color:#021018;border:0;font-weight:700;cursor:pointer";
 const m=document.createElement("div");m.style.cssText="display:none;position:fixed;inset:0;z-index:60;background:#000b;align-items:center;justify-content:center;padding:14px";
 const bs="background:#0a1020;color:#e8f0ff;border:1px solid #28386d;border-radius:10px;padding:7px 12px;cursor:pointer;margin:3px 3px 3px 0";
 m.innerHTML=`<div style="background:#0c1224;border:1px solid #28386d;border-radius:16px;max-width:520px;width:100%;max-height:90vh;overflow:auto;padding:16px;color:#e8f0ff;font:14px/1.5 system-ui">
@@ -326,7 +326,7 @@ m.innerHTML=`<div style="background:#0c1224;border:1px solid #28386d;border-radi
 <input id="sy-k" type="password" placeholder="ghp_..." style="width:100%;box-sizing:border-box;background:#0a1020;color:#e8f0ff;border:1px solid #28386d;border-radius:10px;padding:8px">
 <button id="sy-s" style="${bs}">Save token &amp; connect</button><button id="sy-p" style="${bs}">Push now</button><button id="sy-g" style="${bs}">Pull now</button><button id="sy-o" style="${bs}">Disconnect</button>
 <div id="sy-m" style="color:#00e5ff;margin-top:8px;min-height:20px"></div><button id="sy-x" style="${bs}">Close</button></div>`;
-document.body.append(b,m);
+document.body.append(m);if(rs)rs.parentNode.appendChild(b);else document.body.prepend(b);
 const q=id=>document.getElementById(id);
 b.onclick=()=>{m.style.display="flex";q("sy-k").value=localStorage.getItem(T)||"";msg(localStorage.getItem(T)?"cloud sync is ON":"cloud sync is OFF")};
 q("sy-x").onclick=()=>m.style.display="none";
