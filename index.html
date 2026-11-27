@@ -288,9 +288,7 @@ document.addEventListener("keydown", e => {
 });
 
 render();
-/* ===== Cross-device sync patch =====
-   Paste this just before the LAST </script> in your index.html.
-   Needs: your progress key in localStorage = "g55v1" (change K below if you renamed it). */
+/* Cross-device sync patch. Paste inside your existing script block. */
 (function(){
 const K="g55v1",T="g55tok",I="g55gid",TS="g55ts",F="gate55.json";
 const _si=Storage.prototype.setItem;let timer;
